@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,22 @@ namespace ClipboardManager
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            var clipHandler = new ClipboardHandler(this);
+            clipHandler.ClipboardChanged += ClipboardUpdate;
+        }
+
+        private void ClipboardUpdate(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                Console.WriteLine(Clipboard.GetText());
+            }
         }
     }
 }
