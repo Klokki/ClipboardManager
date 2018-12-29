@@ -28,8 +28,8 @@ namespace ClipboardManager
             ni.DoubleClick +=
                 delegate (object sender, EventArgs args)
                 {
-                    this.Show();
-                    this.WindowState = WindowState.Normal;
+                    Show();
+                    WindowState = WindowState.Normal;
                 };
         }
 
@@ -39,7 +39,7 @@ namespace ClipboardManager
         protected override void OnStateChanged(EventArgs e)
         {
             if (WindowState == System.Windows.WindowState.Minimized)
-                this.Hide();
+                Hide();
 
             base.OnStateChanged(e);
         }
