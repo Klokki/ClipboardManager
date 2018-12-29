@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows;
 
 namespace ClipboardManager
@@ -8,6 +9,8 @@ namespace ClipboardManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private StringBuilder sbClip = new StringBuilder();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -44,12 +47,15 @@ namespace ClipboardManager
             base.OnStateChanged(e);
         }
 
+        /// <summary>
+        /// adds clipboard content to textblock via string builder
+        /// </summary>
         private void ClipboardUpdate(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
-            {
-                Console.WriteLine(Clipboard.GetText());
-            }
+                sbClip.AppendLine(Clipboard.GetText());
+
+            clipContent.Text = sbClip.ToString();
         }
     }
 }
