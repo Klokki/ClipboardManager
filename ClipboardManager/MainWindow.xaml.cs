@@ -26,7 +26,7 @@ namespace ClipboardManager
             // minimizing the window using winforms NotifyIcon
             // maybe switch to WPF NotifyIcon later
             System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
-            ni.Icon = new System.Drawing.Icon(@"../../Clip.ico");
+            ni.Icon = Properties.Resources.Clip;
             ni.Visible = true;
             ni.DoubleClick +=
                 delegate (object sender, EventArgs args)
