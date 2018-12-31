@@ -20,7 +20,7 @@ namespace ClipboardManager
         {
             base.OnSourceInitialized(e);
 
-            var clipHandler = new ClipboardHandler(this);
+            ClipboardHandler clipHandler = new ClipboardHandler(this);
             clipHandler.ClipboardChanged += ClipboardUpdate;
 
             // minimizing the window using winforms NotifyIcon
