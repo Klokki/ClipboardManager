@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DBHandler
 {
-    class Context : DbContext
+    public class Context : DbContext
     {
         public DbSet<Model.Clip> Clip { get; set; }
 

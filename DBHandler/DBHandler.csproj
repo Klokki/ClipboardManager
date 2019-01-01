@@ -151,6 +151,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Migrations\20190101233307_InitialCreate.cs" />
+    <Compile Include="Migrations\20190101233307_InitialCreate.designer.cs">
+      <DependentUpon>20190101233307_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ContextModelSnapshot.cs" />
     <Compile Include="Model\Clip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

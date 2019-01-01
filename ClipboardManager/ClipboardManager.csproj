@@ -232,6 +232,12 @@
   <ItemGroup>
     <Resource Include="Clip.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBHandler\DBHandler.csproj">
+      <Project>{171b4151-0902-4f39-83a4-e8075c58051e}</Project>
+      <Name>DBHandler</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

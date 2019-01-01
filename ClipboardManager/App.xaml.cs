@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DBHandler;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClipboardManager
 {
@@ -13,5 +15,14 @@ namespace ClipboardManager
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+
+            using (Context dbContext = new Context())
+            {
+                dbContext.Database.Migrate();
+            }
+        }
     }
 }
