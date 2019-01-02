@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Text;
 using System.Windows;
+using DBHandler;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClipboardManager
 {
@@ -9,8 +12,6 @@ namespace ClipboardManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private StringBuilder sbClip = new StringBuilder();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -48,14 +49,20 @@ namespace ClipboardManager
         }
 
         /// <summary>
-        /// adds clipboard content to textblock via string builder
+        /// adds clipboard content to sqlite database
         /// </summary>
         private void ClipboardUpdate(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
-                sbClip.AppendLine(Clipboard.GetText());
-
-            clipContent.Text = sbClip.ToString();
+            {
+                // make a separate handler for executing SQL commands later?
+                using (Context dbContext = new Context())
+                {
+                    var query = "INSERT INTO Clip (content) VALUES (@content)";
+                    var content = new SqliteParameter("@content", Clipboard.GetText());
+                    dbContext.Database.ExecuteSqlCommand(query, content);
+                }
+            }
         }
     }
 }
