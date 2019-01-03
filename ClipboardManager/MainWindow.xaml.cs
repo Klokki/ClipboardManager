@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using DBHandler;
@@ -35,6 +36,8 @@ namespace ClipboardManager
                     Show();
                     WindowState = WindowState.Normal;
                 };
+
+            RenderClips();
         }
 
         /// <summary>
@@ -50,6 +53,7 @@ namespace ClipboardManager
 
         /// <summary>
         /// adds clipboard content to sqlite database
+        /// move elsewhere?
         /// </summary>
         private void ClipboardUpdate(object sender, EventArgs e)
         {
@@ -61,6 +65,22 @@ namespace ClipboardManager
                     var query = "INSERT INTO Clip (content) VALUES (@content)";
                     var content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
+                    RenderClips();
+                }
+            }
+        }
+
+        /// <summary>
+        /// renders clip database content on UI
+        /// </summary>
+        private void RenderClips()
+        {
+            using (Context dbContext = new Context())
+            {
+                var clips = dbContext.Clip.FromSql("SELECT * From Clip").ToList();
+                foreach(DBHandler.Model.Clip c in clips)
+                {
+                    clipContent.Text += c.Content + "\n";
                 }
             }
         }
