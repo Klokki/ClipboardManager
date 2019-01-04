@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Windows;
+using DBHandler;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClipboardManager
 {
@@ -9,8 +13,6 @@ namespace ClipboardManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private StringBuilder sbClip = new StringBuilder();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +36,8 @@ namespace ClipboardManager
                     Show();
                     WindowState = WindowState.Normal;
                 };
+
+            RenderClips();
         }
 
         /// <summary>
@@ -48,14 +52,37 @@ namespace ClipboardManager
         }
 
         /// <summary>
-        /// adds clipboard content to textblock via string builder
+        /// adds clipboard content to sqlite database
+        /// move elsewhere?
         /// </summary>
         private void ClipboardUpdate(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
-                sbClip.AppendLine(Clipboard.GetText());
+            {
+                // make a separate handler for executing SQL commands later?
+                using (Context dbContext = new Context())
+                {
+                    var query = "INSERT INTO Clip (content) VALUES (@content)";
+                    var content = new SqliteParameter("@content", Clipboard.GetText());
+                    dbContext.Database.ExecuteSqlCommand(query, content);
+                    clipContent.Text += Clipboard.GetText() + "\n";
+                }
+            }
+        }
 
-            clipContent.Text = sbClip.ToString();
+        /// <summary>
+        /// renders clip database content on UI
+        /// </summary>
+        private void RenderClips()
+        {
+            using (Context dbContext = new Context())
+            {
+                var clips = dbContext.Clip.FromSql("SELECT * From Clip").ToList();
+                foreach(DBHandler.Model.Clip c in clips)
+                {
+                    clipContent.Text += c.Content + "\n";
+                }
+            }
         }
     }
 }
