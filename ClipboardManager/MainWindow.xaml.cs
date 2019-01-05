@@ -25,6 +25,9 @@ namespace ClipboardManager
             ClipboardHandler clipHandler = new ClipboardHandler(this);
             clipHandler.ClipboardChanged += ClipboardUpdate;
 
+            NotifyIcon.Icon = Properties.Resources.Clip;
+
+            /*
             // minimizing the window using winforms NotifyIcon
             // maybe switch to WPF NotifyIcon later
             System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
@@ -36,6 +39,7 @@ namespace ClipboardManager
                     Show();
                     WindowState = WindowState.Normal;
                 };
+            */
 
             RenderClips();
         }
