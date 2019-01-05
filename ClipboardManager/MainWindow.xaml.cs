@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Interop;
 using DBHandler;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -22,24 +23,14 @@ namespace ClipboardManager
         {
             base.OnSourceInitialized(e);
 
+            // hook for maximizing window from tray
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook(WndProc);
+
             ClipboardHandler clipHandler = new ClipboardHandler(this);
             clipHandler.ClipboardChanged += ClipboardUpdate;
 
             NotifyIcon.Icon = Properties.Resources.Clip;
-
-            /*
-            // minimizing the window using winforms NotifyIcon
-            // maybe switch to WPF NotifyIcon later
-            System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
-            ni.Icon = Properties.Resources.Clip;
-            ni.Visible = true;
-            ni.DoubleClick +=
-                delegate (object sender, EventArgs args)
-                {
-                    Show();
-                    WindowState = WindowState.Normal;
-                };
-            */
 
             RenderClips();
         }
@@ -87,6 +78,19 @@ namespace ClipboardManager
                     clipContent.Text += c.Content + "\n";
                 }
             }
+        }
+
+        /// <summary>
+        /// maximize window
+        /// </summary>
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == NativeMethods.WM_SHOWME)
+            {
+                Show();
+                WindowState = WindowState.Normal;
+            }
+            return IntPtr.Zero;
         }
     }
 }
