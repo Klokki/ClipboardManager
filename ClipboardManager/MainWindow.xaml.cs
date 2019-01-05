@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Interop;
-using DBHandler;
+﻿using DBHandler;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Interop;
 
 namespace ClipboardManager
 {
@@ -73,7 +72,7 @@ namespace ClipboardManager
             using (Context dbContext = new Context())
             {
                 var clips = dbContext.Clip.FromSql("SELECT * From Clip").ToList();
-                foreach(DBHandler.Model.Clip c in clips)
+                foreach (DBHandler.Model.Clip c in clips)
                 {
                     clipContent.Text += c.Content + "\n";
                 }
