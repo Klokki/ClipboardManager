@@ -2,6 +2,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
@@ -56,8 +57,8 @@ namespace ClipboardManager
                 // make a separate handler for executing SQL commands later?
                 using (Context dbContext = new Context())
                 {
-                    var query = "INSERT INTO Clip (content) VALUES (@content)";
-                    var content = new SqliteParameter("@content", Clipboard.GetText());
+                    string query = "INSERT INTO Clip (content) VALUES (@content)";
+                    SqliteParameter content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
                     this.UpdateUIContent();
                 }
@@ -71,7 +72,7 @@ namespace ClipboardManager
         {
             using (Context dbContext = new Context())
             {
-                var clips = dbContext.Clip.FromSql("SELECT * From Clip").ToList();
+                List<DBHandler.Model.Clip> clips = dbContext.Clip.FromSql("SELECT * From Clip").ToList();
                 ClipGrid.ItemsSource = clips;
             }
         }
