@@ -31,7 +31,7 @@ namespace ClipboardManager
 
             NotifyIcon.Icon = Properties.Resources.Clip;
 
-            RenderClips();
+            UpdateClips();
         }
 
         /// <summary>
@@ -59,15 +59,15 @@ namespace ClipboardManager
                     var query = "INSERT INTO Clip (content) VALUES (@content)";
                     var content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
-                    RenderClips();
+                    UpdateClips();
                 }
             }
         }
 
         /// <summary>
-        /// renders clip database content on UI
+        /// updates clip database content on UI
         /// </summary>
-        private void RenderClips()
+        private void UpdateClips()
         {
             using (Context dbContext = new Context())
             {
