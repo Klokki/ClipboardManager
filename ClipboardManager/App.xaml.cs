@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using DBHandler;
+﻿using DBHandler;
 using Microsoft.EntityFrameworkCore;
+using System.Windows;
 
 namespace ClipboardManager
 {
@@ -17,7 +11,7 @@ namespace ClipboardManager
     {
         public App()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             using (Context dbContext = new Context())
             {

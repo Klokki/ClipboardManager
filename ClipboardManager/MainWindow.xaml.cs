@@ -15,7 +15,7 @@ namespace ClipboardManager
     {
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -24,14 +24,14 @@ namespace ClipboardManager
 
             // hook for maximizing window from tray
             HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
-            source.AddHook(WndProc);
+            source.AddHook(this.WndProc);
 
             ClipboardHandler clipHandler = new ClipboardHandler(this);
-            clipHandler.ClipboardChanged += ClipboardUpdate;
+            clipHandler.ClipboardChanged += this.ClipboardUpdate;
 
             NotifyIcon.Icon = Properties.Resources.Clip;
 
-            UpdateClips();
+            this.RenderClips();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace ClipboardManager
         protected override void OnStateChanged(EventArgs e)
         {
             if (WindowState == WindowState.Minimized)
-                Hide();
+                this.Hide();
 
             base.OnStateChanged(e);
         }
@@ -59,15 +59,15 @@ namespace ClipboardManager
                     var query = "INSERT INTO Clip (content) VALUES (@content)";
                     var content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
-                    UpdateClips();
+                    this.RenderClips();
                 }
             }
         }
 
         /// <summary>
-        /// updates clip database content on UI
+        /// renders clip database content on UI
         /// </summary>
-        private void UpdateClips()
+        private void RenderClips()
         {
             using (Context dbContext = new Context())
             {
@@ -83,7 +83,7 @@ namespace ClipboardManager
         {
             if (msg == NativeMethods.WM_SHOWME)
             {
-                Show();
+                this.Show();
                 WindowState = WindowState.Normal;
             }
             return IntPtr.Zero;
