@@ -13,6 +13,6 @@
     <Grid>
         <!-- Taskbar minize icon (WPF-NotifyIcon) -->
         <tb:TaskbarIcon x:Name="NotifyIcon" ToolTipText="Clipboard Manager" DoubleClickCommand="{StaticResource ShowWindow}"/>
-        <TextBlock Name="clipContent" FontSize="18"></TextBlock>
+        <DataGrid x:Name="ClipGrid" />
     </Grid>
 </Window>

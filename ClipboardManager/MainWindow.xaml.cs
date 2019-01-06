@@ -59,7 +59,7 @@ namespace ClipboardManager
                     var query = "INSERT INTO Clip (content) VALUES (@content)";
                     var content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
-                    clipContent.Text += Clipboard.GetText() + "\n";
+                    RenderClips();
                 }
             }
         }
@@ -72,10 +72,7 @@ namespace ClipboardManager
             using (Context dbContext = new Context())
             {
                 var clips = dbContext.Clip.FromSql("SELECT * From Clip").ToList();
-                foreach (DBHandler.Model.Clip c in clips)
-                {
-                    clipContent.Text += c.Content + "\n";
-                }
+                ClipGrid.ItemsSource = clips;
             }
         }
 
