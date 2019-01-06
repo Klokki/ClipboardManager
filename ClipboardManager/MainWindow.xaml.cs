@@ -59,7 +59,7 @@ namespace ClipboardManager
                     var query = "INSERT INTO Clip (content) VALUES (@content)";
                     var content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
-                    //clipContent.Text += Clipboard.GetText() + "\n";
+                    RenderClips();
                 }
             }
         }
