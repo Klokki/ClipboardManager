@@ -12,7 +12,7 @@ namespace ClipboardManager
         {
             HwndSource src = PresentationSource.FromVisual(windowSource) as HwndSource;
 
-            src.AddHook(WndProc);
+            src.AddHook(this.WndProc);
 
             IntPtr windowHandle = new WindowInteropHelper(windowSource).Handle;
             NativeMethods.AddClipboardFormatListener(windowHandle);
@@ -29,7 +29,7 @@ namespace ClipboardManager
         {
             if (msg == NativeMethods.WM_CLIPBOARDUPDATE)
             {
-                OnClipboardChanged();
+                this.OnClipboardChanged();
                 handled = true;
             }
 

@@ -32,7 +32,7 @@ namespace ClipboardManager
 
             NotifyIcon.Icon = Properties.Resources.Clip;
 
-            this.UpdateUIContent();
+            this.UpdateUIContent(); // update UI on startup
         }
 
         /// <summary>
@@ -60,7 +60,8 @@ namespace ClipboardManager
                     string query = "INSERT INTO Clip (content) VALUES (@content)";
                     SqliteParameter content = new SqliteParameter("@content", Clipboard.GetText());
                     dbContext.Database.ExecuteSqlCommand(query, content);
-                    this.UpdateUIContent();
+
+                    this.UpdateUIContent(); // update UI on inserting new db entry
                 }
             }
         }
