@@ -151,6 +151,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Migrations\20190101233307_InitialCreate.cs" />
     <Compile Include="Migrations\20190101233307_InitialCreate.designer.cs">

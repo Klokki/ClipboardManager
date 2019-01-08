@@ -28,7 +28,7 @@ namespace ClipboardManager
             source.AddHook(this.WndProc);
 
             ClipboardHandler clipHandler = new ClipboardHandler(this);
-            clipHandler.ClipboardChanged += this.ClipboardUpdate;
+            clipHandler.ClipboardChanged += this.OnClipboardUpdate;
 
             NotifyIcon.Icon = Properties.Resources.Clip;
 
@@ -48,21 +48,14 @@ namespace ClipboardManager
 
         /// <summary>
         /// adds clipboard content to sqlite database
-        /// move elsewhere?
         /// </summary>
-        private void ClipboardUpdate(object sender, EventArgs e)
+        private void OnClipboardUpdate(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
             {
-                // make a separate handler for executing SQL commands later?
-                using (Context dbContext = new Context())
-                {
-                    string query = "INSERT INTO Clip (content) VALUES (@content)";
-                    SqliteParameter content = new SqliteParameter("@content", Clipboard.GetText());
-                    dbContext.Database.ExecuteSqlCommand(query, content);
-
-                    this.UpdateUIContent(); // update UI on inserting new db entry
-                }
+                // insert new database entry in DBHandler
+                Command.Insert(Clipboard.GetText());
+                this.UpdateUIContent(); // update UI on insertion of new entry
             }
         }
 
