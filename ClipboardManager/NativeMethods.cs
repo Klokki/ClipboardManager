@@ -14,13 +14,13 @@ namespace ClipboardManager
         public static extern bool AddClipboardFormatListener(IntPtr hwnd);
 
         // maximize
-        public static readonly int HWND_BROADCAST = 0xffff;
+        public const int HWND_BROADCAST = 0xffff;
         public static readonly int WM_SHOWME = RegisterWindowMessage("WM_SHOWME");
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern int RegisterWindowMessage(string message);
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
     }
 }

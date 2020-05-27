@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DBHandler
 {
-    public class Command
+    public static class Command
     {
         public static void Insert(string s)
         {

@@ -19,6 +19,7 @@ namespace ClipboardManager
             return true;
         }
 
-        public event EventHandler CanExecuteChanged;
+        // add {} remove {} to suppress warning
+        public event EventHandler CanExecuteChanged { add { } remove { } }
     }
 }
